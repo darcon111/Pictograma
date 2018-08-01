@@ -1,0 +1,102 @@
+<resources>
+    <string name="firebase_url">https://pictograma-b8ac7.firebaseio.com</string>
+    <string name="facebook_app_id">2170916763138212</string>
+    <string name="app_name">Pictograma</string>
+    <string name="iniciar">INICIAR SESIÓN CON:</string>
+    <string name="login_mail">Inicia sesión con tu email</string>
+    <string name="login_twitter">Inicia sesión con Twitter</string>
+    <string name="login_facebook">Inicia sesión con Facebook</string>
+    <string name="login">Iniciar o Registrarse</string>
+    <string name="restablecer">Restablecer Contraseña</string>
+    <string name="register">Guardar</string>
+    <string name="agencia">AGENCIA DE \n
+PUBLICIDAD\n
+Online  </string>
+
+    <string name="error_login_pass">Contraseña Incorrecta</string>
+    <string name="error_user">Un usuario con este correo electrónico ya existe</string>
+    <string name="ok">Aceptar</string>
+    <string name="cancel">Cancelar</string>
+    <string name="yes">Yes</string>
+    <string name="no">No</string>
+    <string name="error_mail">Ingrese un Email Valido</string>
+    <string name="error_pass">Ingrese Contraseña</string>
+    <string name="error_repass">Confirmar Contraseña distinto</string>
+    <string name="auth">Autenticando</string>
+    <string name="user_create">Usuario creado \n Por Favor Valide su email</string>
+    <string name="restabler_msg">Esta opcion es solo para usuarios registrados via email !!!</string>
+    <string name="acepte_terminos">Por favor acepte los términos y condiciones</string>
+    <string name="search">Busqueda</string>
+    <string name="share23">Email</string>
+    <string name="pass">Contraseña</string>
+    <string name="email">Correo</string>
+    <string name="error">Error</string>
+    <string name="permissions">La Aplicación Necesita de permisos</string>
+    <string name="tour1">Nuestos Servicios:</string>
+    <string name="tour2">¿Por qué contratarnos?</string>
+    <string name="tour3">¿Por qué contratarnos?</string>
+    <string name="inicio">Iniciar</string>
+    <string name="error_email">Para acceder a la aplicacion \n Primero verifique su email!!!</string>
+    <string name="drawer_open">Open Drawer</string>
+    <string name="drawer_close">Close Drawer</string>
+    <string name="end">Salir</string>
+    <string name="config">Configuración</string>
+    <string name="help">Ayuda</string>
+    <string name="exit">Esta seguro que desea salir?</string>
+    <string name="contra">Contratar</string>
+    <string name="join">Únetenos</string>
+    <string name="textjoin1">¿Quieres ser parte de nuestro equipo de profesionales?</string>
+    <string name="textjoin2">! Da click aqui !</string>
+
+    <string name="reg_name">Nombre Completo</string>
+    <string name="reg_email">Email</string>
+    <string name="reg_direccion">Dirección</string>
+    <string name="reg_data">Datos Bancarios</string>
+    <string name="reg_leyenda">Para recibir pagos de trabajos terminados</string>
+    <string name="reg_banco">Banco</string>
+    <string name="reg_surcusal">Sucursal</string>
+    <string name="reg_cta">Cta.</string>
+    <string name="reg_card">Tarjeta</string>
+    <string name="reg_num">Número</string>
+    <string name="reg_continue">Continue</string>
+    <string name="reg_servicies">¿Qué servicios ofreces?</string>
+    <string name="error_reg_name">Ingrese su nombre</string>
+    <string name="error_reg_email">Ingrese su email</string>
+    <string name="error_reg_direcccion">Ingrese su dirección</string>
+    <string name="error_reg_banco">Ingrese el nombre de su banco</string>
+    <string name="error_reg_sucursal">Ingrese la sucursal</string>
+    <string name="error_reg_cta">Ingrese su número de su cuenta</string>
+    <string name="reg_especialidad">Cual es tu especialidad ?</string>
+    <string name="reg_anios">Años de Experiencia?</string>
+    <string name="reg_titulos">Certificaciones o títulos educativos</string>
+    <string name="reg_razones">Describe 3 razones por la que el cliente debe escoger trabajar contigo</string>
+    <string name="reg_especialidad2">Especialidad</string>
+    <string name="reg_experiencia">Años de experiencia?</string>
+    <string name="reg_experiencia2">Años</string>
+    <string name="reg_titulo1">Titulo1</string>
+    <string name="reg_titulo2">Titulo2</string>
+    <string name="reg_titulo3">Titulo3</string>
+    <string name="reg_razon21">Razón 1</string>
+    <string name="reg_razon22">Razón 2</string>
+    <string name="reg_razon23">Razón 3</string>
+    <string name="reg_save">Guardar</string>
+    <string name="error_servicios">Selecciones los servicios que ofrece</string>
+    <string name="error_anio">Ingrese sus años de experiencia</string>
+    <string name="error_titulo">Ingrese al menos un titulo</string>
+    <string name="error_razon">Ingrese al menos una razon</string>
+    <string name="certificado">Certificados</string>
+    <string name="cualidades">Cualidades</string>
+    <string name="todo">TODO</string>
+    <string name="image">Seleccione Imagen</string>
+    <string name="sd">Card</string>
+    <string name="cancelar">Cancelar</string>
+    <string name="error_img">Seleccione al menos 1 imagen</string>
+    <string name="profesional">Editar Datos</string>
+
+
+    /* twitter*/
+    <string name="twitter_consumer_key">m7JTbXwuo8N33e4BpbPR9fufq</string>
+    <string name="twitter_consumer_secret">dAR0UYjifggLf76wkWph6WGbZ7BJp0jSztSebg6gzIUJeslZYC</string>
+
+
+</resources>

@@ -1,0 +1,16 @@
+<?xml version="1.0" encoding="utf-8"?>
+<resources>
+    <color name="colorPrimary">#5968bd</color>
+    <color name="colorPrimaryDark">#303F9F</color>
+    <color name="colorAccent">#909295</color>
+    <color name="colorDivider">#fafafa</color>
+    <color name="colorPrimaryText">#ffffff</color>
+    <color name="colorSecondaryText">#0a0906</color>
+    <color name="colorTheText">#757575</color>
+
+    /*others */
+    <color name="colorFacebook">#3b5998</color>
+    <color name="colorTwitter">#55acee</color>
+    <color name="colorEmail">#d44539</color>
+    <color name="black_overlay">#66000000</color>
+</resources>
