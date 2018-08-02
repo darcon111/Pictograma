@@ -36,6 +36,8 @@ public class Profeccional {
 
         private String id;
 
+        private String imgPerfil;
+
         public Profeccional() {
         }
 
@@ -267,6 +269,11 @@ public class Profeccional {
                 this.numtarjeta = numtarjeta;
         }
 
+        public String getImgPerfil() {
+                return imgPerfil;
+        }
 
-
+        public void setImgPerfil(String imgPerfil) {
+                this.imgPerfil = imgPerfil;
+        }
 }

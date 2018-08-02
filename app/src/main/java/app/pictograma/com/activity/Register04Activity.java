@@ -25,7 +25,6 @@ import android.widget.Toast;
 import com.fasterxml.jackson.databind.ObjectMapper;
 import com.google.firebase.auth.FirebaseAuth;
 import com.google.firebase.auth.FirebaseUser;
-import com.google.firebase.database.ChildEventListener;
 import com.google.firebase.database.DataSnapshot;
 import com.google.firebase.database.DatabaseError;
 import com.google.firebase.database.DatabaseReference;
@@ -42,10 +41,8 @@ import java.io.File;
 import java.io.FileInputStream;
 import java.io.IOException;
 import java.io.InputStream;
-import java.lang.reflect.Field;
 import java.text.SimpleDateFormat;
 import java.util.Date;
-import java.util.HashMap;
 import java.util.Map;
 
 import app.pictograma.com.R;
@@ -130,7 +127,7 @@ public class Register04Activity extends AppCompatActivity  implements
         img9=(ImageView) findViewById(R.id.img9);
         img10=(ImageView) findViewById(R.id.img10);
 
-        guardar=(Button) findViewById(R.id.btnguardar);
+        guardar=(Button) findViewById(R.id.btncontratar);
 
 
         // Initialize Firebase Auth
@@ -447,6 +444,8 @@ public class Register04Activity extends AppCompatActivity  implements
                 data.setImg8(image8);
                 data.setImg9(image9);
                 data.setImg10(image10);
+
+                data.setImgPerfil(Constants.imagenPerfil);
 
 
 

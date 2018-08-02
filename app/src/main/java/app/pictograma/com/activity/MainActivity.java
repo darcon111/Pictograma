@@ -36,6 +36,7 @@ import android.view.animation.AnimationUtils;
 import android.view.animation.DecelerateInterpolator;
 import android.widget.AdapterView;
 import android.widget.ArrayAdapter;
+import android.widget.Button;
 import android.widget.FrameLayout;
 import android.widget.ImageView;
 import android.widget.ListView;
@@ -321,6 +322,33 @@ public class MainActivity extends AppCompatActivity {
             productHolder.mImage.setImageResource(mListServicies.get(i).getImagen());
 
 
+            productHolder.mImage.setOnClickListener(new View.OnClickListener() {
+                @Override
+                public void onClick(View v) {
+
+
+                    Intent intent = new Intent(MainActivity.this,ContratarActivity.class);
+                    intent.putExtra("id",String.valueOf(i));
+                    startActivity(intent);
+
+
+                }
+            });
+
+            productHolder.mContratar.setOnClickListener(new View.OnClickListener() {
+                @Override
+                public void onClick(View v) {
+
+
+                    Intent intent = new Intent(MainActivity.this,ContratarActivity.class);
+                    intent.putExtra("id",String.valueOf(i));
+                    startActivity(intent);
+
+
+                }
+            });
+
+
         }
 
 
@@ -359,12 +387,14 @@ public class MainActivity extends AppCompatActivity {
     public class ServiciesRecycleHolder extends RecyclerView.ViewHolder {
         public TextView mTitle;
         public ImageView mImage;
+        public Button mContratar;
 
 
         public ServiciesRecycleHolder(View itemView) {
             super(itemView);
             mTitle = (TextView) itemView.findViewById(R.id.txttitle);
             mImage = (ImageView) itemView.findViewById(R.id.imagen);
+            mContratar = (Button) itemView.findViewById(R.id.btnContratar);
         }
     }
 

@@ -58,7 +58,7 @@
                     android:layout_marginStart="8dp"
                     android:layout_marginTop="16dp"
                     android:orientation="vertical"
-                    app:layout_constraintBottom_toTopOf="@+id/btnguardar"
+                    app:layout_constraintBottom_toTopOf="@+id/btncontratar"
                     app:layout_constraintEnd_toEndOf="parent"
                     app:layout_constraintStart_toStartOf="parent"
                     app:layout_constraintTop_toTopOf="parent">
@@ -249,7 +249,7 @@
                 </LinearLayout>
 
                 <Button
-                    android:id="@+id/btnguardar"
+                    android:id="@+id/btncontratar"
                     style="@style/button"
                     android:layout_width="wrap_content"
                     android:layout_marginBottom="24dp"

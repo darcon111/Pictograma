@@ -16,15 +16,10 @@ import android.widget.ArrayAdapter;
 import android.widget.Button;
 import android.widget.EditText;
 import android.widget.Spinner;
-import android.widget.Toast;
 
-import com.facebook.login.LoginManager;
-import com.google.firebase.auth.FirebaseAuth;
 import com.google.firebase.auth.FirebaseUser;
 
 import java.util.ArrayList;
-import java.util.List;
-import java.util.LongSummaryStatistics;
 
 import app.pictograma.com.R;
 import app.pictograma.com.clases.Alert;
@@ -72,7 +67,7 @@ public class Register02Activity extends AppCompatActivity implements AdapterView
             getSupportActionBar().setHomeAsUpIndicator(getResources().getDrawable(R.drawable.ic_arrow_back));
         }
 
-        next=(Button) findViewById(R.id.btnguardar);
+        next=(Button) findViewById(R.id.btncontratar);
 
         next.setOnClickListener(new View.OnClickListener() {
             @Override
