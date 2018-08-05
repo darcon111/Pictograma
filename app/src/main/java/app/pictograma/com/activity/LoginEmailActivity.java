@@ -118,12 +118,7 @@ public class LoginEmailActivity extends AppCompatActivity {
 
         databaseUsers.addValueEventListener(listen);
 
-        if ( Build.VERSION.SDK_INT >= Build.VERSION_CODES.LOLLIPOP ) {
-            message = new Alert(LoginEmailActivity.this, R.style.AlertDialog);
-        }
-        else {
-            message = new Alert(LoginEmailActivity.this);
-        }
+
 
     }
 
@@ -150,7 +145,12 @@ public class LoginEmailActivity extends AppCompatActivity {
                                 progressDialog.dismiss();
 
 
-
+                                if ( Build.VERSION.SDK_INT >= Build.VERSION_CODES.LOLLIPOP ) {
+                                    message = new Alert(LoginEmailActivity.this, R.style.AlertDialog);
+                                }
+                                else {
+                                    message = new Alert(LoginEmailActivity.this);
+                                }
                                 message.setMessage( getApplicationContext().getString(R.string.error_login_pass));
                                 message.setPositveButton(getString(R.string.ok), new View.OnClickListener() {
                                     @Override
@@ -167,7 +167,12 @@ public class LoginEmailActivity extends AppCompatActivity {
                             if (task.getException() instanceof FirebaseAuthUserCollisionException) {
                                 progressDialog.dismiss();
 
-
+                                if ( Build.VERSION.SDK_INT >= Build.VERSION_CODES.LOLLIPOP ) {
+                                    message = new Alert(LoginEmailActivity.this, R.style.AlertDialog);
+                                }
+                                else {
+                                    message = new Alert(LoginEmailActivity.this);
+                                }
                                 message.setMessage(getString(R.string.error_user));
                                 message.setPositveButton(getString(R.string.ok), new View.OnClickListener() {
                                     @Override
@@ -272,6 +277,13 @@ public class LoginEmailActivity extends AppCompatActivity {
                                 FirebaseUser user = FirebaseAuth.getInstance().getCurrentUser();
                                 if (user.isEmailVerified() == false) {
                                     user.sendEmailVerification();
+
+                                    if ( Build.VERSION.SDK_INT >= Build.VERSION_CODES.LOLLIPOP ) {
+                                        message = new Alert(LoginEmailActivity.this, R.style.AlertDialog);
+                                    }
+                                    else {
+                                        message = new Alert(LoginEmailActivity.this);
+                                    }
                                     message.setMessage(getResources().getString(R.string.user_create));
 
                                     message.setPositveButton(getString(R.string.ok), new View.OnClickListener() {

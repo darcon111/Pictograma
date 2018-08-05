@@ -22,7 +22,8 @@ Online  </string>
     <string name="error_mail">Ingrese un Email Valido</string>
     <string name="error_pass">Ingrese Contraseña</string>
     <string name="error_repass">Confirmar Contraseña distinto</string>
-    <string name="auth">Autenticando</string>
+    <string name="auth">Autenticando...</string>
+    <string name="save">Guardando...</string>
     <string name="user_create">Usuario creado \n Por Favor Valide su email</string>
     <string name="restabler_msg">Esta opcion es solo para usuarios registrados via email !!!</string>
     <string name="acepte_terminos">Por favor acepte los términos y condiciones</string>
@@ -92,6 +93,8 @@ Online  </string>
     <string name="cancelar">Cancelar</string>
     <string name="error_img">Seleccione al menos 1 imagen</string>
     <string name="profesional">Editar Datos</string>
+    <string name="error_save">Error al guardar información intentelo nuevamente</string>
+    <string name="ok_save">Información guardada con exito</string>
 
 
     /* twitter*/

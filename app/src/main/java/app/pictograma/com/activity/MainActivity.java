@@ -103,6 +103,8 @@ public class MainActivity extends AppCompatActivity {
 
     private User temp=null;
 
+    private Query queryuser;
+
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
@@ -172,7 +174,7 @@ public class MainActivity extends AppCompatActivity {
         String[] parts = user.getEmail().split("@");
         name = parts[0];
 
-        Query queryuser = databaseUsers
+        queryuser = databaseUsers
                 .orderByChild("firebaseId").equalTo(user.getUid());
 
 
@@ -192,6 +194,8 @@ public class MainActivity extends AppCompatActivity {
 
                     menu();
 
+                    update();
+
                 }
 
             }
@@ -201,6 +205,11 @@ public class MainActivity extends AppCompatActivity {
                 Log.e(TAG, "onCancelled", databaseError.toException());
             }
         });
+
+
+
+
+        //databaseUsers.child(idProfesional).addValueEventListener
 
 
 
@@ -285,6 +294,35 @@ public class MainActivity extends AppCompatActivity {
 
 
 
+
+    }
+
+    void update()
+    {
+        queryuser.addValueEventListener(new ValueEventListener() {
+            @Override
+            public void onDataChange(@NonNull DataSnapshot dataSnapshot) {
+
+                for (DataSnapshot postSnapshot : dataSnapshot.getChildren()) {
+                    //getting artist
+                    temp = postSnapshot.getValue(User.class);
+                    if(temp.getType().equals("2")) {
+                        TITLES[0] = getString(R.string.profesional);
+                        ICONS[0] = R.drawable. ic_create_white_24dp;
+
+                    }
+
+                    mAdapter.notifyDataSetChanged();
+
+                }
+
+            }
+
+            @Override
+            public void onCancelled(@NonNull DatabaseError databaseError) {
+
+            }
+        });
 
     }
 

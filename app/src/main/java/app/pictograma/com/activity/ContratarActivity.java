@@ -307,21 +307,21 @@ public class ContratarActivity extends AppCompatActivity {
 
             }
 
-            //productHolder.mImage.setImageResource(mListServicies.get(i).getImagen());
 
 
-            /*productHolder.mImage.setOnClickListener(new View.OnClickListener() {
+            productHolder.mImage.setOnClickListener(new View.OnClickListener() {
                 @Override
                 public void onClick(View v) {
 
 
-                    Intent intent = new Intent(MainActivity.this,ContratarActivity.class);
-                    intent.putExtra("id",String.valueOf(i));
+                    Intent intent = new Intent(ContratarActivity.this,ShowWorkActivity.class);
+                    intent.putExtra("id",mListProfeccionalSelect.get(i).getId());
+                    intent.putExtra("userid",mListProfeccionalSelect.get(i).getUserid());
                     startActivity(intent);
 
 
                 }
-            });*/
+            });
 
 
         }

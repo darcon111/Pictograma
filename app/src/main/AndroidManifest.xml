@@ -57,7 +57,8 @@
         <activity android:name=".activity.Register02Activity" />
         <activity android:name=".activity.Register03Activity" />
         <activity android:name=".activity.Register04Activity" />
-        <activity android:name=".activity.ContratarActivity"></activity>
+        <activity android:name=".activity.ContratarActivity" />
+        <activity android:name=".activity.ShowWorkActivity"></activity>
     </application>
 
 </manifest>

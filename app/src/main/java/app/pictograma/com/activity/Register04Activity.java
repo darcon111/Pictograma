@@ -1,5 +1,6 @@
 package app.pictograma.com.activity;
 
+import android.app.ProgressDialog;
 import android.content.Context;
 import android.content.Intent;
 import android.content.pm.ActivityInfo;
@@ -11,6 +12,7 @@ import android.os.Build;
 import android.os.Bundle;
 import android.os.Environment;
 import android.provider.MediaStore;
+import android.support.annotation.NonNull;
 import android.support.v7.app.ActionBar;
 import android.support.v7.app.AppCompatActivity;
 import android.support.v7.widget.Toolbar;
@@ -22,7 +24,10 @@ import android.widget.Button;
 import android.widget.ImageView;
 import android.widget.Toast;
 
+import com.facebook.login.LoginManager;
 import com.fasterxml.jackson.databind.ObjectMapper;
+import com.google.android.gms.tasks.OnFailureListener;
+import com.google.android.gms.tasks.OnSuccessListener;
 import com.google.firebase.auth.FirebaseAuth;
 import com.google.firebase.auth.FirebaseUser;
 import com.google.firebase.database.DataSnapshot;
@@ -43,6 +48,7 @@ import java.io.IOException;
 import java.io.InputStream;
 import java.text.SimpleDateFormat;
 import java.util.Date;
+import java.util.Iterator;
 import java.util.Map;
 
 import app.pictograma.com.R;
@@ -90,6 +96,9 @@ public class Register04Activity extends AppCompatActivity  implements
     private static DatabaseReference databaseProfesional;
     private String idUser="",idProfesional="";
     private static final String TAG = Register04Activity.class.getSimpleName();
+
+    private ProgressDialog progressDialog=null;
+
 
 
     @Override
@@ -448,6 +457,10 @@ public class Register04Activity extends AppCompatActivity  implements
                 data.setImgPerfil(Constants.imagenPerfil);
 
 
+                progressDialog = new ProgressDialog(Register04Activity.this);
+                progressDialog.show();
+                progressDialog.setContentView(R.layout.progressdialogsave);
+                progressDialog.setCancelable(false);
 
 
                 if(idProfesional.trim().length()==0){
@@ -458,7 +471,68 @@ public class Register04Activity extends AppCompatActivity  implements
 
                     //Saving
                     databaseProfesional.child(id).setValue(data);
-                    databaseUsers.child(idUser).child("type").setValue("2");
+
+                    databaseProfesional.child(id).addValueEventListener(new ValueEventListener() {
+                        @Override
+                        public void onDataChange(@NonNull DataSnapshot dataSnapshot) {
+
+                            progressDialog.dismiss();
+
+                            databaseUsers.child(idUser).child("type").setValue("2");
+
+
+                            if ( Build.VERSION.SDK_INT >= Build.VERSION_CODES.LOLLIPOP ) {
+                                message = new Alert(Register04Activity.this, R.style.AlertDialog);
+                            }
+                            else {
+                                message = new Alert(Register04Activity.this);
+                            }
+
+                            message.setMessage(getResources().getString(R.string.ok_save));
+                            message.setPositveButton(getString(R.string.ok), new View.OnClickListener() {
+                                @Override
+                                public void onClick(View view) {
+
+                                    message.dismiss();
+                                    finish();
+                                }
+                            });
+                            message.show();
+
+
+
+                        }
+
+                        @Override
+                        public void onCancelled(@NonNull DatabaseError databaseError) {
+
+                            progressDialog.dismiss();
+                            if ( Build.VERSION.SDK_INT >= Build.VERSION_CODES.LOLLIPOP ) {
+                                message = new Alert(Register04Activity.this, R.style.AlertDialog);
+                            }
+                            else {
+                                message = new Alert(Register04Activity.this);
+                            }
+
+                            message.setMessage(getResources().getString(R.string.error_save));
+                            message.setPositveButton(getString(R.string.ok), new View.OnClickListener() {
+                                @Override
+                                public void onClick(View view) {
+
+                                    message.dismiss();
+                                }
+                            });
+                            message.show();
+
+                        }
+                    });
+
+
+
+
+
+
+
                 }else
                 {
 
@@ -467,13 +541,88 @@ public class Register04Activity extends AppCompatActivity  implements
 
                     Map<String, Object> update = oMapper.convertValue(data, Map.class);
 
-                    for (Map.Entry<String, Object> entry : update.entrySet()) {
+                    Iterator<Map.Entry<String, Object>> entryIt = update.entrySet().iterator();
+
+                    while (entryIt.hasNext()) {
+                        Map.Entry<String, Object> entry = entryIt.next();
+
+                        if(entry.getKey().equals("id") || entry.getKey().equals("userid"))
+                        {
+                            entryIt.remove();
+                        }
+                    }
+
+                    databaseProfesional.child(idProfesional).setValue(update);
+
+                    databaseProfesional.child(idProfesional).addValueEventListener(new ValueEventListener() {
+                        @Override
+                        public void onDataChange(@NonNull DataSnapshot dataSnapshot) {
+
+                            if(!Constants.imagenPerfil.equals(""))
+                            {
+                                databaseUsers.child(idUser).child("imagen").setValue(Constants.imagenPerfil);
+                            }
+
+
+                            progressDialog.dismiss();
+
+                            if ( Build.VERSION.SDK_INT >= Build.VERSION_CODES.LOLLIPOP ) {
+                                message = new Alert(Register04Activity.this, R.style.AlertDialog);
+                            }
+                            else {
+                                message = new Alert(Register04Activity.this);
+                            }
+
+                            message.setMessage(getResources().getString(R.string.ok_save));
+                            message.setPositveButton(getString(R.string.ok), new View.OnClickListener() {
+                                @Override
+                                public void onClick(View view) {
+
+                                    message.dismiss();
+                                    finish();
+                                }
+                            });
+                            message.show();
+
+                        }
+
+                        @Override
+                        public void onCancelled(@NonNull DatabaseError databaseError) {
+
+                            progressDialog.dismiss();
+                            if ( Build.VERSION.SDK_INT >= Build.VERSION_CODES.LOLLIPOP ) {
+                                message = new Alert(Register04Activity.this, R.style.AlertDialog);
+                            }
+                            else {
+                                message = new Alert(Register04Activity.this);
+                            }
+
+                            message.setMessage(getResources().getString(R.string.error_save));
+                            message.setPositveButton(getString(R.string.ok), new View.OnClickListener() {
+                                @Override
+                                public void onClick(View view) {
+
+                                    message.dismiss();
+                                }
+                            });
+                            message.show();
+
+                        }
+                    });
+
+
+
+
+
+
+                    /*for (Map.Entry<String, Object> entry : update.entrySet()) {
+
                         if(!entry.getKey().equals("id") && !entry.getKey().equals("userid"))
                         {
                             databaseProfesional.child(idProfesional).child(entry.getKey()).setValue(entry.getValue());
                         }
-                        //System.out.println("clave=" + entry.getKey() + ", valor=" + entry.getValue());
-                    }
+
+                    }*/
 
 
 
@@ -482,12 +631,9 @@ public class Register04Activity extends AppCompatActivity  implements
                 }
 
 
-                if(!Constants.imagenPerfil.equals(""))
-                {
-                    databaseUsers.child(idUser).child("imagen").setValue(Constants.imagenPerfil);
-                }
 
-                finish();
+
+
 
 
 

@@ -84,7 +84,7 @@ public class LoginActivity extends AppCompatActivity {
     private static final String TAG = LoginActivity.class.getSimpleName();
     private static final int PERMISSION_REQUEST_CODE = 1;
     private Alert message;
-    ProgressDialog progressDialog=null;
+    private ProgressDialog progressDialog=null;
     private FirebaseAuth mAuth;
     private FirebaseAuth.AuthStateListener mAuthListener;
     private CallbackManager mCallbackManager;
@@ -283,16 +283,6 @@ public class LoginActivity extends AppCompatActivity {
         }
 
 
-        if ( Build.VERSION.SDK_INT >= Build.VERSION_CODES.LOLLIPOP ) {
-            message = new Alert(LoginActivity.this, R.style.AlertDialog);
-        }
-        else {
-            message = new Alert(LoginActivity.this);
-        }
-
-
-
-
 
 
 
@@ -359,6 +349,14 @@ public class LoginActivity extends AppCompatActivity {
                                 // there was an error
                                 Log.d(TAG, "error Login :" + task.getException().toString());
                                 progressDialog.dismiss();
+
+
+                                if ( Build.VERSION.SDK_INT >= Build.VERSION_CODES.LOLLIPOP ) {
+                                    message = new Alert(LoginActivity.this, R.style.AlertDialog);
+                                }
+                                else {
+                                    message = new Alert(LoginActivity.this);
+                                }
 
                                 message.setMessage(getResources().getString(R.string.error_user));
                                 message.setPositveButton(getString(R.string.ok), new View.OnClickListener() {
@@ -521,6 +519,13 @@ public class LoginActivity extends AppCompatActivity {
                 } else {
                     Log.e(TAG, "Permission Denied, You cannot access location data.");
 
+
+                    if ( Build.VERSION.SDK_INT >= Build.VERSION_CODES.LOLLIPOP ) {
+                        message = new Alert(LoginActivity.this, R.style.AlertDialog);
+                    }
+                    else {
+                        message = new Alert(LoginActivity.this);
+                    }
                     message.setMessage(getResources().getString(R.string.permissions));
                     message.setPositveButton("Yes", new View.OnClickListener() {
                         @Override
@@ -568,6 +573,13 @@ public class LoginActivity extends AppCompatActivity {
                             FirebaseUser user = FirebaseAuth.getInstance().getCurrentUser();
                             if(user.isEmailVerified()==false) {
                                 user.sendEmailVerification();
+
+                                if ( Build.VERSION.SDK_INT >= Build.VERSION_CODES.LOLLIPOP ) {
+                                    message = new Alert(LoginActivity.this, R.style.AlertDialog);
+                                }
+                                else {
+                                    message = new Alert(LoginActivity.this);
+                                }
 
                                 message.setMessage(getResources().getString(R.string.user_create));
 
@@ -651,6 +663,13 @@ public class LoginActivity extends AppCompatActivity {
 
                         if (task.getException() instanceof FirebaseAuthUserCollisionException) {
                             progressDialog.dismiss();
+
+                            if ( Build.VERSION.SDK_INT >= Build.VERSION_CODES.LOLLIPOP ) {
+                                message = new Alert(LoginActivity.this, R.style.AlertDialog);
+                            }
+                            else {
+                                message = new Alert(LoginActivity.this);
+                            }
                             message.setMessage(getResources().getString(R.string.error_user));
 
                             message.setPositveButton(getResources().getString(R.string.ok), new View.OnClickListener() {
@@ -672,6 +691,15 @@ public class LoginActivity extends AppCompatActivity {
                             FirebaseUser user = FirebaseAuth.getInstance().getCurrentUser();
                             if(user.isEmailVerified()==false) {
                                 user.sendEmailVerification();
+
+
+                                if ( Build.VERSION.SDK_INT >= Build.VERSION_CODES.LOLLIPOP ) {
+                                    message = new Alert(LoginActivity.this, R.style.AlertDialog);
+                                }
+                                else {
+                                    message = new Alert(LoginActivity.this);
+                                }
+
                                 message.setMessage(getResources().getString(R.string.user_create));
 
                                 message.setPositveButton(getResources().getString(R.string.ok), new View.OnClickListener() {
@@ -715,7 +743,12 @@ public class LoginActivity extends AppCompatActivity {
     public void restablecer(View view)
     {
 
-
+        if ( Build.VERSION.SDK_INT >= Build.VERSION_CODES.LOLLIPOP ) {
+            message = new Alert(LoginActivity.this, R.style.AlertDialog);
+        }
+        else {
+            message = new Alert(LoginActivity.this);
+        }
         message.setMessage(getResources().getString(R.string.restabler_msg));
 
         message.setPositveButton("Ok", new View.OnClickListener() {
