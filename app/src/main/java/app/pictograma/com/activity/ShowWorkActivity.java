@@ -4,6 +4,8 @@ import android.content.Intent;
 import android.content.pm.ActivityInfo;
 import android.os.Build;
 import android.support.annotation.NonNull;
+import android.support.v4.app.FragmentActivity;
+import android.support.v4.view.ViewPager;
 import android.support.v7.app.ActionBar;
 import android.support.v7.app.AppCompatActivity;
 import android.os.Bundle;
@@ -22,17 +24,20 @@ import com.google.firebase.database.DatabaseReference;
 import com.google.firebase.database.FirebaseDatabase;
 import com.google.firebase.database.Query;
 import com.google.firebase.database.ValueEventListener;
+import com.rd.PageIndicatorView;
+import com.rd.animation.type.AnimationType;
 
 import java.util.ArrayList;
 
 import app.pictograma.com.R;
+import app.pictograma.com.adapter.TourFragmentPagerAdapter;
 import app.pictograma.com.clases.ImagenCircular.CircleImageView;
 import app.pictograma.com.clases.Profeccional;
 import app.pictograma.com.clases.User;
 import app.pictograma.com.config.Constants;
 import uk.co.chrisjenx.calligraphy.CalligraphyConfig;
 
-public class ShowWorkActivity extends AppCompatActivity {
+public class ShowWorkActivity extends FragmentActivity {
 
     private ImageView img1,img2,img3,img4,img5,img6,img7,img8,img9,img10;
     private TextView txtNombre,txtDireccion,txtAnios,txtHabilidades,txtCertificados,txtCualidades;
@@ -44,6 +49,20 @@ public class ShowWorkActivity extends AppCompatActivity {
     private ArrayList<String> select;
     private static DatabaseReference databaseUsers;
 
+
+    /**
+     * The pager widget, which handles animation and allows swiping horizontally
+     * to access previous and next pages.
+     */
+    private ViewPager pager = null;
+
+    /**
+     * The pager adapter, which provides the pages to the view pager widget.
+     */
+    private TourFragmentPagerAdapter pagerAdapter;
+    // Create an adapter with the fragments we show on the ViewPager
+    private TourFragmentPagerAdapter adapter;
+    private PageIndicatorView pageIndicatorView;
 
 
 
@@ -60,9 +79,14 @@ public class ShowWorkActivity extends AppCompatActivity {
 
         setContentView(R.layout.activity_show_work);
 
+        // Instantiate a ViewPager
+        this.pager = (ViewPager) this.findViewById(R.id.pager);
+
+        pageIndicatorView = (PageIndicatorView) this.findViewById(R.id.pageIndicatorView);
+
 
         /* toolbar*/
-        toolbar = (Toolbar) findViewById(R.id.toolbaruser);
+        /*toolbar = (Toolbar) findViewById(R.id.toolbaruser);
 
         setSupportActionBar(toolbar);
         ActionBar actionBar = getSupportActionBar();
@@ -72,7 +96,7 @@ public class ShowWorkActivity extends AppCompatActivity {
             getSupportActionBar().setHomeAsUpIndicator(getDrawable(R.drawable.ic_arrow_back));
         } else {
             getSupportActionBar().setHomeAsUpIndicator(getResources().getDrawable(R.drawable.ic_arrow_back));
-        }
+        }*/
 
 
 
@@ -154,6 +178,8 @@ public class ShowWorkActivity extends AppCompatActivity {
                     //getting artist
                     Profeccional temp = postSnapshot.getValue(Profeccional.class);
 
+                    databaseProfesional.removeEventListener(this);
+
                     select = new ArrayList<String>();
                     //llenar info
                     String[] servicios =temp.getServicios().split(",");
@@ -208,88 +234,63 @@ public class ShowWorkActivity extends AppCompatActivity {
                         img1.setVisibility(View.GONE);
                     }
 
+                    int Contador=0;
+
+                    // Create an adapter with the fragments we show on the ViewPager
+                    adapter = new TourFragmentPagerAdapter(
+                            getSupportFragmentManager());
+
+                    if(!temp.getImg1().equals(""))
+                    {
+                        adapter.addFragment(ImagenSlidePageFragment.newInstance(temp.getImg1(),Contador++));
+                    }
                     if(!temp.getImg2().equals(""))
                     {
-                        img2.setImageBitmap(Constants.decodeBase64(temp.getImg2()));
-                    }else
-                    {
-                        img2.setVisibility(View.GONE);
+                        adapter.addFragment(ImagenSlidePageFragment.newInstance(temp.getImg2(),Contador++));
                     }
-
                     if(!temp.getImg3().equals(""))
                     {
-                        img3.setImageBitmap(Constants.decodeBase64(temp.getImg3()));
-                    }else
-                    {
-                        img3.setVisibility(View.GONE);
+                        adapter.addFragment(ImagenSlidePageFragment.newInstance(temp.getImg3(),Contador++));
                     }
-
-
                     if(!temp.getImg4().equals(""))
                     {
-                        img4.setImageBitmap(Constants.decodeBase64(temp.getImg4()));
-                    }else
-                    {
-                        img4.setVisibility(View.GONE);
+                        adapter.addFragment(ImagenSlidePageFragment.newInstance(temp.getImg4(),Contador++));
                     }
-
                     if(!temp.getImg5().equals(""))
                     {
-                        img5.setImageBitmap(Constants.decodeBase64(temp.getImg5()));
-                    }else
-                    {
-                        img5.setVisibility(View.GONE);
+                        adapter.addFragment(ImagenSlidePageFragment.newInstance(temp.getImg5(),Contador++));
                     }
-
                     if(!temp.getImg6().equals(""))
                     {
-                        img6.setImageBitmap(Constants.decodeBase64(temp.getImg6()));
-                    }else
-                    {
-                        img6.setVisibility(View.GONE);
+                        adapter.addFragment(ImagenSlidePageFragment.newInstance(temp.getImg6(),Contador++));
                     }
-
                     if(!temp.getImg7().equals(""))
                     {
-                        img7.setImageBitmap(Constants.decodeBase64(temp.getImg7()));
-                    }else
-                    {
-                        img7.setVisibility(View.GONE);
+                        adapter.addFragment(ImagenSlidePageFragment.newInstance(temp.getImg7(),Contador++));
                     }
-
                     if(!temp.getImg8().equals(""))
                     {
-                        img8.setImageBitmap(Constants.decodeBase64(temp.getImg8()));
-                    }else
-                    {
-                        img8.setVisibility(View.GONE);
+                        adapter.addFragment(ImagenSlidePageFragment.newInstance(temp.getImg8(),Contador++));
                     }
-
                     if(!temp.getImg9().equals(""))
                     {
-                        img9.setImageBitmap(Constants.decodeBase64(temp.getImg9()));
-                    }else
-                    {
-                        img9.setVisibility(View.GONE);
+                        adapter.addFragment(ImagenSlidePageFragment.newInstance(temp.getImg9(),Contador++));
                     }
-
                     if(!temp.getImg10().equals(""))
                     {
-                        img10.setImageBitmap(Constants.decodeBase64(temp.getImg10()));
-                    }else
-                    {
-                        img10.setVisibility(View.GONE);
+                        adapter.addFragment(ImagenSlidePageFragment.newInstance(temp.getImg10(),Contador++));
                     }
 
-                    /*if(temp.getImg3().equals("") && temp.getImg4().equals("")){
+                    pager.setAdapter(adapter);
 
-                    }
-                    if(temp.getImg5().equals("") && temp.getImg6().equals("")){
+                    pageIndicatorView.setViewPager(pager);
 
-                    }
-                    if(temp.getImg7().equals("") && temp.getImg8().equals("")){
+                    pageIndicatorView.setInteractiveAnimation(true);
+                    pageIndicatorView.setAnimationType(AnimationType.THIN_WORM);
 
-                    }*/
+                    pageIndicatorView.setCount(Contador);
+
+
 
 
 
