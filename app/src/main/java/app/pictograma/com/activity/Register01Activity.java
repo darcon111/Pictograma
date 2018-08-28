@@ -26,8 +26,7 @@ import app.pictograma.com.R;
 import app.pictograma.com.clases.Profeccional;
 import app.pictograma.com.clases.User;
 import app.pictograma.com.config.Constants;
-import uk.co.chrisjenx.calligraphy.CalligraphyConfig;
-import uk.co.chrisjenx.calligraphy.CalligraphyContextWrapper;
+
 
 public class Register01Activity extends AppCompatActivity {
     private Toolbar toolbar;
@@ -40,11 +39,7 @@ public class Register01Activity extends AppCompatActivity {
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
-        CalligraphyConfig.initDefault(new CalligraphyConfig.Builder()
-                .setDefaultFontPath("fonts/RobotoLight.ttf")
-                .setFontAttrId(R.attr.fontPath)
-                .build()
-        );
+
         setRequestedOrientation (ActivityInfo.SCREEN_ORIENTATION_PORTRAIT);
         setContentView(R.layout.activity_register01);
 
@@ -293,10 +288,7 @@ public class Register01Activity extends AppCompatActivity {
 
 
 
-    @Override
-    protected void attachBaseContext(Context newBase) {
-        super.attachBaseContext(CalligraphyContextWrapper.wrap(newBase));
-    }
+
 
 
 }

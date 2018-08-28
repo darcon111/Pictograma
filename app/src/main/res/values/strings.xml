@@ -95,6 +95,7 @@ Online  </string>
     <string name="profesional">Editar Datos</string>
     <string name="error_save">Error al guardar información intentelo nuevamente</string>
     <string name="ok_save">Información guardada con exito</string>
+    <string name="colorAccent">#909295</string>
 
 
     /* twitter*/

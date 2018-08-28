@@ -16,7 +16,8 @@
         <item name="android:itemTextAppearance">@style/MyActionBar.MenuTextStyle</item>
         <item name="android:itemBackground">@color/colorPrimary</item>
         <item name="android:actionBarStyle">@style/ActionBar</item>
-        <item name="fontPath">fonts/RobotoLight.ttf</item>
+        <item name="android:fontFamily">@font/roboto_light</item>
+
 
     </style>
 
@@ -221,6 +222,7 @@
         <item name="android:layout_marginBottom">5dp</item>
         <item name="android:layout_margin">5dp</item>
         <item name="android:textColor">@color/colorDivider</item>
+        <item name="android:fontFamily">@font/roboto</item>
     </style>
 
     <style name="button2" parent="android:Widget.Button">

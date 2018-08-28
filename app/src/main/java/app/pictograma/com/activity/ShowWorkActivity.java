@@ -35,7 +35,7 @@ import app.pictograma.com.clases.ImagenCircular.CircleImageView;
 import app.pictograma.com.clases.Profeccional;
 import app.pictograma.com.clases.User;
 import app.pictograma.com.config.Constants;
-import uk.co.chrisjenx.calligraphy.CalligraphyConfig;
+
 
 public class ShowWorkActivity extends FragmentActivity {
 
@@ -70,11 +70,7 @@ public class ShowWorkActivity extends FragmentActivity {
     protected void onCreate(Bundle savedInstanceState) {
 
         super.onCreate(savedInstanceState);
-        CalligraphyConfig.initDefault(new CalligraphyConfig.Builder()
-                .setDefaultFontPath("fonts/RobotoLight.ttf")
-                .setFontAttrId(R.attr.fontPath)
-                .build()
-        );
+
         setRequestedOrientation (ActivityInfo.SCREEN_ORIENTATION_PORTRAIT);
 
         setContentView(R.layout.activity_show_work);

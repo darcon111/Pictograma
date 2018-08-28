@@ -44,8 +44,7 @@ import app.pictograma.com.R;
 import app.pictograma.com.clases.ImagenCircular.CircleImageView;
 import app.pictograma.com.clases.MultiSpinner;
 import app.pictograma.com.config.Constants;
-import uk.co.chrisjenx.calligraphy.CalligraphyConfig;
-import uk.co.chrisjenx.calligraphy.CalligraphyContextWrapper;
+
 
 public class Register03Activity extends AppCompatActivity implements
         IPickResult {
@@ -67,11 +66,7 @@ public class Register03Activity extends AppCompatActivity implements
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
-        CalligraphyConfig.initDefault(new CalligraphyConfig.Builder()
-                .setDefaultFontPath("fonts/RobotoLight.ttf")
-                .setFontAttrId(R.attr.fontPath)
-                .build()
-        );
+
         setRequestedOrientation (ActivityInfo.SCREEN_ORIENTATION_PORTRAIT);
         setContentView(R.layout.activity_register03);
 
@@ -155,10 +150,7 @@ public class Register03Activity extends AppCompatActivity implements
 
     }
 
-    @Override
-    protected void attachBaseContext(Context newBase) {
-        super.attachBaseContext(CalligraphyContextWrapper.wrap(newBase));
-    }
+
 
     public void siguiente(View v)
     {

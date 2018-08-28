@@ -67,9 +67,9 @@ import app.pictograma.com.R;
 import app.pictograma.com.clases.Alert;
 import app.pictograma.com.clases.User;
 import app.pictograma.com.config.AppPreferences;
+import cn.pedant.SweetAlert.SweetAlertDialog;
 import io.fabric.sdk.android.Fabric;
-import uk.co.chrisjenx.calligraphy.CalligraphyConfig;
-import uk.co.chrisjenx.calligraphy.CalligraphyContextWrapper;
+
 import com.twitter.sdk.android.core.Callback;
 import com.twitter.sdk.android.core.Result;
 import com.twitter.sdk.android.core.Twitter;
@@ -83,8 +83,7 @@ public class LoginActivity extends AppCompatActivity {
 
     private static final String TAG = LoginActivity.class.getSimpleName();
     private static final int PERMISSION_REQUEST_CODE = 1;
-    private Alert message;
-    private ProgressDialog progressDialog=null;
+
     private FirebaseAuth mAuth;
     private FirebaseAuth.AuthStateListener mAuthListener;
     private CallbackManager mCallbackManager;
@@ -111,14 +110,12 @@ public class LoginActivity extends AppCompatActivity {
     private ValueEventListener listen;
     private ConstraintLayout main;
 
+    private SweetAlertDialog pDialog;
+
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
-        CalligraphyConfig.initDefault(new CalligraphyConfig.Builder()
-                .setDefaultFontPath("fonts/RobotoLight.ttf")
-                .setFontAttrId(R.attr.fontPath)
-                .build()
-        );
+
         setRequestedOrientation (ActivityInfo.SCREEN_ORIENTATION_PORTRAIT);
 
         /* *************************************
@@ -348,27 +345,26 @@ public class LoginActivity extends AppCompatActivity {
                             if (!task.isSuccessful()) {
                                 // there was an error
                                 Log.d(TAG, "error Login :" + task.getException().toString());
-                                progressDialog.dismiss();
+                                pDialog.dismiss();
 
 
-                                if ( Build.VERSION.SDK_INT >= Build.VERSION_CODES.LOLLIPOP ) {
-                                    message = new Alert(LoginActivity.this, R.style.AlertDialog);
-                                }
-                                else {
-                                    message = new Alert(LoginActivity.this);
-                                }
 
-                                message.setMessage(getResources().getString(R.string.error_user));
-                                message.setPositveButton(getString(R.string.ok), new View.OnClickListener() {
+                                pDialog = new SweetAlertDialog(LoginActivity.this, SweetAlertDialog.ERROR_TYPE);
+                                pDialog.setTitleText(getResources().getString(R.string.app_name));
+                                pDialog.setContentText(getResources().getString(R.string.error_user));
+                                pDialog.setConfirmText(getResources().getString(R.string.ok));
+                                pDialog.setConfirmClickListener(new SweetAlertDialog.OnSweetClickListener() {
                                     @Override
-                                    public void onClick(View view) {
+                                    public void onClick(SweetAlertDialog sDialog) {
+                                        sDialog.dismissWithAnimation();
 
                                         LoginManager.getInstance().logOut();
                                         FirebaseAuth.getInstance().signOut();
-                                        message.dismiss();
                                     }
                                 });
-                                message.show();
+                                pDialog.show();
+
+
 
                             } else {
                                 insertUser("");
@@ -520,21 +516,21 @@ public class LoginActivity extends AppCompatActivity {
                     Log.e(TAG, "Permission Denied, You cannot access location data.");
 
 
-                    if ( Build.VERSION.SDK_INT >= Build.VERSION_CODES.LOLLIPOP ) {
-                        message = new Alert(LoginActivity.this, R.style.AlertDialog);
-                    }
-                    else {
-                        message = new Alert(LoginActivity.this);
-                    }
-                    message.setMessage(getResources().getString(R.string.permissions));
-                    message.setPositveButton("Yes", new View.OnClickListener() {
+                    pDialog = new SweetAlertDialog(LoginActivity.this, SweetAlertDialog.ERROR_TYPE);
+                    pDialog.setTitleText(getResources().getString(R.string.app_name));
+                    pDialog.setContentText(getResources().getString(R.string.permissions));
+                    pDialog.setConfirmText(getResources().getString(R.string.ok));
+                    pDialog.setConfirmClickListener(new SweetAlertDialog.OnSweetClickListener() {
                         @Override
-                        public void onClick(View view) {
-                            message.dismiss();
+                        public void onClick(SweetAlertDialog sDialog) {
+                            sDialog.dismissWithAnimation();
+
                             finish();
                         }
                     });
-                    message.show();
+                    pDialog.show();
+
+
 
                 }
                 break;
@@ -574,25 +570,21 @@ public class LoginActivity extends AppCompatActivity {
                             if(user.isEmailVerified()==false) {
                                 user.sendEmailVerification();
 
-                                if ( Build.VERSION.SDK_INT >= Build.VERSION_CODES.LOLLIPOP ) {
-                                    message = new Alert(LoginActivity.this, R.style.AlertDialog);
-                                }
-                                else {
-                                    message = new Alert(LoginActivity.this);
-                                }
 
-                                message.setMessage(getResources().getString(R.string.user_create));
 
-                                message.setPositveButton(getResources().getString(R.string.ok), new View.OnClickListener() {
+                                pDialog = new SweetAlertDialog(LoginActivity.this, SweetAlertDialog.ERROR_TYPE);
+                                pDialog.setTitleText(getResources().getString(R.string.app_name));
+                                pDialog.setContentText(getResources().getString(R.string.user_create));
+                                pDialog.setConfirmText(getResources().getString(R.string.ok));
+                                pDialog.setConfirmClickListener(new SweetAlertDialog.OnSweetClickListener() {
                                     @Override
-                                    public void onClick(View view) {
+                                    public void onClick(SweetAlertDialog sDialog) {
+                                        sDialog.dismissWithAnimation();
 
                                         LoginManager.getInstance().logOut();
-                                        message.dismiss();
                                     }
                                 });
-                                message.show();
-
+                                pDialog.show();
 
 
 
@@ -649,10 +641,15 @@ public class LoginActivity extends AppCompatActivity {
 
     private void handleTwitterSession(final String token, final String secret)
     {
-        progressDialog = new ProgressDialog(LoginActivity.this);
-        progressDialog.show();
-        progressDialog.setContentView(R.layout.progressdialog);
-        progressDialog.setCancelable(false);
+
+
+        pDialog = new SweetAlertDialog(this, SweetAlertDialog.PROGRESS_TYPE);
+        pDialog.getProgressHelper().setBarColor(Color.parseColor(getString(R.string.colorAccent)));
+        pDialog.setTitleText(getResources().getString(R.string.auth));
+        pDialog.setCancelable(true);
+        pDialog.show();
+
+
 
         AuthCredential credential = TwitterAuthProvider.getCredential(token, secret);
         mAuth.signInWithCredential(credential)
@@ -662,57 +659,56 @@ public class LoginActivity extends AppCompatActivity {
                         Log.d(TAG, "signInWithCredential:onComplete:" + task.isSuccessful());
 
                         if (task.getException() instanceof FirebaseAuthUserCollisionException) {
-                            progressDialog.dismiss();
+                            pDialog.dismiss();
 
-                            if ( Build.VERSION.SDK_INT >= Build.VERSION_CODES.LOLLIPOP ) {
-                                message = new Alert(LoginActivity.this, R.style.AlertDialog);
-                            }
-                            else {
-                                message = new Alert(LoginActivity.this);
-                            }
-                            message.setMessage(getResources().getString(R.string.error_user));
 
-                            message.setPositveButton(getResources().getString(R.string.ok), new View.OnClickListener() {
+                            pDialog = new SweetAlertDialog(LoginActivity.this, SweetAlertDialog.ERROR_TYPE);
+                            pDialog.setTitleText(getResources().getString(R.string.app_name));
+                            pDialog.setContentText(getResources().getString(R.string.error_user));
+                            pDialog.setConfirmText(getResources().getString(R.string.ok));
+                            pDialog.setConfirmClickListener(new SweetAlertDialog.OnSweetClickListener() {
                                 @Override
-                                public void onClick(View view) {
-                                    message.dismiss();
+                                public void onClick(SweetAlertDialog sDialog) {
+                                    sDialog.dismissWithAnimation();
 
+                                    LoginManager.getInstance().logOut();
                                 }
                             });
-                            message.show();
+                            pDialog.show();
+
+
+
 
                             return;
                         }
 
                         if (task.isSuccessful()) {
 
-                            progressDialog.dismiss();
+                            pDialog.dismiss();
 
                             FirebaseUser user = FirebaseAuth.getInstance().getCurrentUser();
                             if(user.isEmailVerified()==false) {
                                 user.sendEmailVerification();
 
 
-                                if ( Build.VERSION.SDK_INT >= Build.VERSION_CODES.LOLLIPOP ) {
-                                    message = new Alert(LoginActivity.this, R.style.AlertDialog);
-                                }
-                                else {
-                                    message = new Alert(LoginActivity.this);
-                                }
 
-                                message.setMessage(getResources().getString(R.string.user_create));
-
-                                message.setPositveButton(getResources().getString(R.string.ok), new View.OnClickListener() {
+                                pDialog = new SweetAlertDialog(LoginActivity.this, SweetAlertDialog.SUCCESS_TYPE);
+                                pDialog.setTitleText(getResources().getString(R.string.app_name));
+                                pDialog.setContentText(getResources().getString(R.string.user_create));
+                                pDialog.setConfirmText(getResources().getString(R.string.ok));
+                                pDialog.setConfirmClickListener(new SweetAlertDialog.OnSweetClickListener() {
                                     @Override
-                                    public void onClick(View view) {
-                                        message.dismiss();
+                                    public void onClick(SweetAlertDialog sDialog) {
+                                        sDialog.dismissWithAnimation();
 
+                                        LoginManager.getInstance().logOut();
                                     }
                                 });
-                                message.show();
+                                pDialog.show();
+
 
                             }else {
-                                progressDialog.dismiss();
+                                pDialog.dismiss();
                                 insertUser("");
                                 databaseUsers.removeEventListener(listen);
                                 Intent intent = new Intent(LoginActivity.this, MainActivity.class);
@@ -726,7 +722,7 @@ public class LoginActivity extends AppCompatActivity {
                         // the auth state listener will be notified and logic to handle the
                         // signed in user can be handled in the listener.
                         if (!task.isSuccessful()) {
-                            progressDialog.dismiss();
+                            pDialog.dismiss();
                             Log.w(TAG, "signInWithCredential", task.getException());
                             Toast.makeText(LoginActivity.this, "Authentication failed.",
                                     Toast.LENGTH_SHORT).show();
@@ -743,28 +739,19 @@ public class LoginActivity extends AppCompatActivity {
     public void restablecer(View view)
     {
 
-        if ( Build.VERSION.SDK_INT >= Build.VERSION_CODES.LOLLIPOP ) {
-            message = new Alert(LoginActivity.this, R.style.AlertDialog);
-        }
-        else {
-            message = new Alert(LoginActivity.this);
-        }
-        message.setMessage(getResources().getString(R.string.restabler_msg));
-
-        message.setPositveButton("Ok", new View.OnClickListener() {
+        pDialog = new SweetAlertDialog(LoginActivity.this, SweetAlertDialog.SUCCESS_TYPE);
+        pDialog.setTitleText(getResources().getString(R.string.app_name));
+        pDialog.setContentText(getResources().getString(R.string.restabler_msg));
+        pDialog.setConfirmText(getResources().getString(R.string.ok));
+        pDialog.setConfirmClickListener(new SweetAlertDialog.OnSweetClickListener() {
             @Override
-            public void onClick(View view) {
-                message.dismiss();
+            public void onClick(SweetAlertDialog sDialog) {
+                sDialog.dismissWithAnimation();
+
                 recuperar();
-
-
-
-
             }
         });
-        message.show();
-
-
+        pDialog.show();
 
 
     }
@@ -825,10 +812,7 @@ public class LoginActivity extends AppCompatActivity {
         settingsDialog.getWindow().setAttributes(lp);
     }
 
-    @Override
-    protected void attachBaseContext(Context newBase) {
-        super.attachBaseContext(CalligraphyContextWrapper.wrap(newBase));
-    }
+
 
 
 }

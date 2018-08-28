@@ -25,8 +25,7 @@ import app.pictograma.com.R;
 import app.pictograma.com.clases.Alert;
 import app.pictograma.com.clases.MultiSpinner;
 import app.pictograma.com.config.Constants;
-import uk.co.chrisjenx.calligraphy.CalligraphyConfig;
-import uk.co.chrisjenx.calligraphy.CalligraphyContextWrapper;
+
 
 public class Register02Activity extends AppCompatActivity implements AdapterView.OnItemSelectedListener,MultiSpinner.MultiSpinnerListener {
 
@@ -46,11 +45,7 @@ public class Register02Activity extends AppCompatActivity implements AdapterView
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
-        CalligraphyConfig.initDefault(new CalligraphyConfig.Builder()
-                .setDefaultFontPath("fonts/RobotoLight.ttf")
-                .setFontAttrId(R.attr.fontPath)
-                .build()
-        );
+
         setRequestedOrientation (ActivityInfo.SCREEN_ORIENTATION_PORTRAIT);
         setContentView(R.layout.activity_register02);
 
@@ -181,10 +176,6 @@ public class Register02Activity extends AppCompatActivity implements AdapterView
 
     }
 
-    @Override
-    protected void attachBaseContext(Context newBase) {
-        super.attachBaseContext(CalligraphyContextWrapper.wrap(newBase));
-    }
 
     @Override
     public void onItemSelected(AdapterView<?> parent, View view, int position, long id) {

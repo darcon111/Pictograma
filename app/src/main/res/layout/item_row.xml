@@ -43,8 +43,7 @@
                 android:paddingTop="4dp"
                 android:text="rowText"
                 android:textColor="@color/colorSecondaryText"
-                android:textSize="@dimen/dim_text_size_item_row"
-                android:textStyle="bold" />
+                android:textSize="@dimen/dim_text_size_item_row" />
 
         </LinearLayout>
 

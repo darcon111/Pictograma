@@ -72,9 +72,7 @@ import app.pictograma.com.config.AppPreferences;
 import app.pictograma.com.config.Constants;
 import app.pictograma.com.helpers.HidingScrollListener;
 import app.pictograma.com.helpers.UtilHelper;
-import uk.co.chrisjenx.calligraphy.CalligraphyConfig;
-import uk.co.chrisjenx.calligraphy.CalligraphyContextWrapper;
-
+import cn.pedant.SweetAlert.SweetAlertDialog;
 
 
 public class MainActivity extends AppCompatActivity {
@@ -105,16 +103,13 @@ public class MainActivity extends AppCompatActivity {
 
     private Query queryuser;
 
+    private SweetAlertDialog pDialog;
+
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
-        /* set orientation*/
-        CalligraphyConfig.initDefault(new CalligraphyConfig.Builder()
-                .setDefaultFontPath("fonts/RobotoLight.ttf")
-                .setFontAttrId(R.attr.fontPath)
-                .build()
-        );
+
         FacebookSdk.sdkInitialize(getApplicationContext());
         setRequestedOrientation(ActivityInfo.SCREEN_ORIENTATION_PORTRAIT);
         setContentView(R.layout.activity_main);
@@ -532,21 +527,31 @@ public class MainActivity extends AppCompatActivity {
                         break;
                     case 4:
 
-                        new AlertDialog.Builder(MainActivity.this, R.style.AlertDialog)
-                                .setIcon(R.mipmap.ic_launcher)
-                                .setTitle(getString(R.string.app_name))
-                                .setMessage(getString(R.string.exit))
-                                .setCancelable(false)
-                                .setNegativeButton(getString(R.string.no), null)//WITHOUT listener
-                                .setPositiveButton(getString(R.string.yes), new DialogInterface.OnClickListener() {//un listener que al pulsar, cierre la aplicacion
-                                    @Override
-                                    public void onClick(DialogInterface dialog, int which) {
-                                        signOut();
-                                        finish();
-                                    }
-                                })
-                                .show();
-                        
+
+                        pDialog = new SweetAlertDialog(MainActivity.this, SweetAlertDialog.NORMAL_TYPE);
+                        pDialog.setTitleText(getResources().getString(R.string.app_name));
+                        pDialog.setContentText(getResources().getString(R.string.exit));
+                        pDialog.setConfirmText(getResources().getString(R.string.yes));
+                        pDialog.setConfirmClickListener(new SweetAlertDialog.OnSweetClickListener() {
+                            @Override
+                            public void onClick(SweetAlertDialog sDialog) {
+                                sDialog.dismissWithAnimation();
+
+                                signOut();
+                                finish();
+                            }
+                        });
+                        pDialog.setCancelText(getString(R.string.no));
+                        pDialog.setCancelClickListener(new SweetAlertDialog.OnSweetClickListener() {
+                            @Override
+                            public void onClick(SweetAlertDialog sweetAlertDialog) {
+                                sweetAlertDialog.dismiss();
+                            }
+                        });
+
+                        pDialog.show();
+
+
                         break;
                     case 5:
                         
@@ -581,10 +586,7 @@ public class MainActivity extends AppCompatActivity {
 
 
 
-    @Override
-    protected void attachBaseContext(Context newBase) {
-        super.attachBaseContext(CalligraphyContextWrapper.wrap(newBase));
-    }
+
 
 
     private void hideViews() {
