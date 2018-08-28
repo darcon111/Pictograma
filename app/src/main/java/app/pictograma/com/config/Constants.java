@@ -498,6 +498,17 @@ public class Constants {
         }
     }
 
+    public static boolean isHasJson(JSONObject object,String test) {
+        try {
+            String temp=object.getString(test);
+        } catch (JSONException ex) {
+
+            return false;
+        }
+        return true;
+    }
+
+
 
 
 

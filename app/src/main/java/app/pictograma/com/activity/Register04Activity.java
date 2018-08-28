@@ -6,6 +6,7 @@ import android.content.Intent;
 import android.content.pm.ActivityInfo;
 import android.graphics.Bitmap;
 import android.graphics.BitmapFactory;
+import android.graphics.Color;
 import android.media.MediaScannerConnection;
 import android.net.Uri;
 import android.os.Build;
@@ -56,6 +57,7 @@ import app.pictograma.com.clases.Alert;
 import app.pictograma.com.clases.Profeccional;
 import app.pictograma.com.clases.User;
 import app.pictograma.com.config.Constants;
+import cn.pedant.SweetAlert.SweetAlertDialog;
 
 
 public class Register04Activity extends AppCompatActivity  implements
@@ -89,15 +91,14 @@ public class Register04Activity extends AppCompatActivity  implements
     private String image10 = "";
 
     private Button guardar;
-    private Alert message;
+
     private static FirebaseUser user;
 
     private static DatabaseReference databaseProfesional;
     private String idUser="",idProfesional="";
     private static final String TAG = Register04Activity.class.getSimpleName();
 
-    private ProgressDialog progressDialog=null;
-
+    private SweetAlertDialog pDialog;
 
 
     @Override
@@ -334,16 +335,6 @@ public class Register04Activity extends AppCompatActivity  implements
         });
 
 
-
-        if ( Build.VERSION.SDK_INT >= Build.VERSION_CODES.LOLLIPOP ) {
-            message = new Alert(this, R.style.AlertDialog);
-        }
-        else {
-            message = new Alert(this);
-        }
-
-
-
         Query queryuser = databaseUsers
                 .orderByChild("firebaseId").equalTo(user.getUid());
 
@@ -404,15 +395,20 @@ public class Register04Activity extends AppCompatActivity  implements
                 {
 
                     if(Constants.imagen1.equals("") && Constants.imagen2.equals("") && Constants.imagen3.equals("") && Constants.imagen4.equals("") && Constants.imagen5.equals("") && Constants.imagen6.equals("") && Constants.imagen7.equals("") && Constants.imagen8.equals("") && Constants.imagen9.equals("") && Constants.imagen10.equals("")) {
-                        message.setMessage(getApplicationContext().getString(R.string.error_img));
-                        message.setPositveButton(getString(R.string.ok), new View.OnClickListener() {
-                            @Override
-                            public void onClick(View view) {
 
-                                message.dismiss();
+                        pDialog = new SweetAlertDialog(Register04Activity.this, SweetAlertDialog.WARNING_TYPE);
+                        pDialog.setTitleText(getResources().getString(R.string.app_name));
+                        pDialog.setContentText(getResources().getString(R.string.error_img));
+                        pDialog.setConfirmText(getResources().getString(R.string.ok));
+                        pDialog.setConfirmClickListener(new SweetAlertDialog.OnSweetClickListener() {
+                            @Override
+                            public void onClick(SweetAlertDialog sDialog) {
+                                sDialog.dismissWithAnimation();
+
                             }
                         });
-                        message.show();
+                        pDialog.show();
+
                         return;
                     }
                 }
@@ -452,10 +448,11 @@ public class Register04Activity extends AppCompatActivity  implements
                 data.setImgPerfil(Constants.imagenPerfil);
 
 
-                progressDialog = new ProgressDialog(Register04Activity.this);
-                progressDialog.show();
-                progressDialog.setContentView(R.layout.progressdialogsave);
-                progressDialog.setCancelable(false);
+                pDialog = new SweetAlertDialog(Register04Activity.this, SweetAlertDialog.PROGRESS_TYPE);
+                pDialog.getProgressHelper().setBarColor(Color.parseColor(getString(R.string.colorAccent)));
+                pDialog.setTitleText(getResources().getString(R.string.auth));
+                pDialog.setCancelable(true);
+                pDialog.show();
 
 
                 if(idProfesional.trim().length()==0){
@@ -471,28 +468,24 @@ public class Register04Activity extends AppCompatActivity  implements
                         @Override
                         public void onDataChange(@NonNull DataSnapshot dataSnapshot) {
 
-                            progressDialog.dismiss();
+                            pDialog.dismiss();
 
                             databaseUsers.child(idUser).child("type").setValue("2");
 
 
-                            if ( Build.VERSION.SDK_INT >= Build.VERSION_CODES.LOLLIPOP ) {
-                                message = new Alert(Register04Activity.this, R.style.AlertDialog);
-                            }
-                            else {
-                                message = new Alert(Register04Activity.this);
-                            }
-
-                            message.setMessage(getResources().getString(R.string.ok_save));
-                            message.setPositveButton(getString(R.string.ok), new View.OnClickListener() {
+                            pDialog = new SweetAlertDialog(Register04Activity.this, SweetAlertDialog.WARNING_TYPE);
+                            pDialog.setTitleText(getResources().getString(R.string.app_name));
+                            pDialog.setContentText(getResources().getString(R.string.ok_save));
+                            pDialog.setConfirmText(getResources().getString(R.string.ok));
+                            pDialog.setConfirmClickListener(new SweetAlertDialog.OnSweetClickListener() {
                                 @Override
-                                public void onClick(View view) {
-
-                                    message.dismiss();
-                                    finish();
+                                public void onClick(SweetAlertDialog sDialog) {
+                                    sDialog.dismissWithAnimation();
+                                        finish();
                                 }
                             });
-                            message.show();
+                            pDialog.show();
+
 
 
 
@@ -501,23 +494,23 @@ public class Register04Activity extends AppCompatActivity  implements
                         @Override
                         public void onCancelled(@NonNull DatabaseError databaseError) {
 
-                            progressDialog.dismiss();
-                            if ( Build.VERSION.SDK_INT >= Build.VERSION_CODES.LOLLIPOP ) {
-                                message = new Alert(Register04Activity.this, R.style.AlertDialog);
-                            }
-                            else {
-                                message = new Alert(Register04Activity.this);
-                            }
+                            pDialog.dismiss();
 
-                            message.setMessage(getResources().getString(R.string.error_save));
-                            message.setPositveButton(getString(R.string.ok), new View.OnClickListener() {
+
+                            pDialog = new SweetAlertDialog(Register04Activity.this, SweetAlertDialog.WARNING_TYPE);
+                            pDialog.setTitleText(getResources().getString(R.string.app_name));
+                            pDialog.setContentText(getResources().getString(R.string.error_save));
+                            pDialog.setConfirmText(getResources().getString(R.string.ok));
+                            pDialog.setConfirmClickListener(new SweetAlertDialog.OnSweetClickListener() {
                                 @Override
-                                public void onClick(View view) {
+                                public void onClick(SweetAlertDialog sDialog) {
+                                    sDialog.dismissWithAnimation();
 
-                                    message.dismiss();
                                 }
                             });
-                            message.show();
+                            pDialog.show();
+
+
 
                         }
                     });
@@ -559,48 +552,47 @@ public class Register04Activity extends AppCompatActivity  implements
                             }
 
 
-                            progressDialog.dismiss();
+                            pDialog.dismiss();
 
-                            if ( Build.VERSION.SDK_INT >= Build.VERSION_CODES.LOLLIPOP ) {
-                                message = new Alert(Register04Activity.this, R.style.AlertDialog);
-                            }
-                            else {
-                                message = new Alert(Register04Activity.this);
-                            }
 
-                            message.setMessage(getResources().getString(R.string.ok_save));
-                            message.setPositveButton(getString(R.string.ok), new View.OnClickListener() {
+
+                            pDialog = new SweetAlertDialog(Register04Activity.this, SweetAlertDialog.NORMAL_TYPE);
+                            pDialog.setTitleText(getResources().getString(R.string.app_name));
+                            pDialog.setContentText(getResources().getString(R.string.ok_save));
+                            pDialog.setConfirmText(getResources().getString(R.string.ok));
+                            pDialog.setConfirmClickListener(new SweetAlertDialog.OnSweetClickListener() {
                                 @Override
-                                public void onClick(View view) {
-
-                                    message.dismiss();
+                                public void onClick(SweetAlertDialog sDialog) {
+                                    sDialog.dismissWithAnimation();
                                     finish();
+
                                 }
                             });
-                            message.show();
+                            pDialog.show();
+
 
                         }
 
                         @Override
                         public void onCancelled(@NonNull DatabaseError databaseError) {
 
-                            progressDialog.dismiss();
-                            if ( Build.VERSION.SDK_INT >= Build.VERSION_CODES.LOLLIPOP ) {
-                                message = new Alert(Register04Activity.this, R.style.AlertDialog);
-                            }
-                            else {
-                                message = new Alert(Register04Activity.this);
-                            }
+                            pDialog.dismiss();
 
-                            message.setMessage(getResources().getString(R.string.error_save));
-                            message.setPositveButton(getString(R.string.ok), new View.OnClickListener() {
+                            pDialog = new SweetAlertDialog(Register04Activity.this, SweetAlertDialog.NORMAL_TYPE);
+                            pDialog.setTitleText(getResources().getString(R.string.app_name));
+                            pDialog.setContentText(getResources().getString(R.string.error_save));
+                            pDialog.setConfirmText(getResources().getString(R.string.ok));
+                            pDialog.setConfirmClickListener(new SweetAlertDialog.OnSweetClickListener() {
                                 @Override
-                                public void onClick(View view) {
+                                public void onClick(SweetAlertDialog sDialog) {
+                                    sDialog.dismissWithAnimation();
 
-                                    message.dismiss();
+
                                 }
                             });
-                            message.show();
+                            pDialog.show();
+
+
 
                         }
                     });

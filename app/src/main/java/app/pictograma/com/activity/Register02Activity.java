@@ -25,6 +25,7 @@ import app.pictograma.com.R;
 import app.pictograma.com.clases.Alert;
 import app.pictograma.com.clases.MultiSpinner;
 import app.pictograma.com.config.Constants;
+import cn.pedant.SweetAlert.SweetAlertDialog;
 
 
 public class Register02Activity extends AppCompatActivity implements AdapterView.OnItemSelectedListener,MultiSpinner.MultiSpinnerListener {
@@ -37,9 +38,11 @@ public class Register02Activity extends AppCompatActivity implements AdapterView
     private String itemSelect;
     private ArrayList<String> select;
     private EditText txtAnio,txtTitulo1,txtTitulo2,txtTitulo3,txtRazon1,txtRazon2,txtRazon3;
-    private Alert message;
+
     private boolean[] serviciosSelect;
     private Button next;
+
+    private SweetAlertDialog pDialog;
 
 
     @Override
@@ -136,12 +139,6 @@ public class Register02Activity extends AppCompatActivity implements AdapterView
         txtRazon2=(EditText) findViewById(R.id.txtrazon2);
         txtRazon3=(EditText) findViewById(R.id.txtrazon3);
 
-        if ( Build.VERSION.SDK_INT >= Build.VERSION_CODES.LOLLIPOP ) {
-            message = new Alert(Register02Activity.this, R.style.AlertDialog);
-        }
-        else {
-            message = new Alert(Register02Activity.this);
-        }
 
         if(!Constants.anios.equals(""))
         {
@@ -223,20 +220,21 @@ public class Register02Activity extends AppCompatActivity implements AdapterView
     {
         if(select.size()==0)
         {
-            message.setMessage(getResources().getString(R.string.error_servicios));
-            message.setPositveButton(getString(R.string.ok), new View.OnClickListener() {
-                @Override
-                public void onClick(View view) {
 
-                    message.dismiss();
+
+            pDialog = new SweetAlertDialog(Register02Activity.this, SweetAlertDialog.WARNING_TYPE);
+            pDialog.setTitleText(getResources().getString(R.string.app_name));
+            pDialog.setContentText(getResources().getString(R.string.error_user));
+            pDialog.setConfirmText(getResources().getString(R.string.ok));
+            pDialog.setConfirmClickListener(new SweetAlertDialog.OnSweetClickListener() {
+                @Override
+                public void onClick(SweetAlertDialog sDialog) {
+                    sDialog.dismissWithAnimation();
 
                 }
             });
+            pDialog.show();
 
-
-
-
-            message.show();
             return;
 
         }

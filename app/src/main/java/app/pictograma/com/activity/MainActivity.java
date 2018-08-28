@@ -90,7 +90,7 @@ public class MainActivity extends AppCompatActivity {
     private String imagen, name="Usuario";
     private static FirebaseDatabase mDatabase;
 
-    private Alert message;
+
     private ServiciesRecycleAdapter mServiciesAdapter;
     private FirebaseAuth auth;
     private FirebaseUser user;
@@ -209,27 +209,23 @@ public class MainActivity extends AppCompatActivity {
 
 
 
-
-        if ( Build.VERSION.SDK_INT >= Build.VERSION_CODES.LOLLIPOP ) {
-            message = new Alert(MainActivity.this, R.style.AlertDialog);
-        }
-        else {
-            message = new Alert(MainActivity.this);
-        }
-
         if (user.isEmailVerified() == false) {
 
-            message.setMessage(getString(R.string.error_user));
-            message.setPositveButton(getString(R.string.ok), new View.OnClickListener() {
+            pDialog = new SweetAlertDialog(MainActivity.this, SweetAlertDialog.ERROR_TYPE);
+            pDialog.setTitleText(getResources().getString(R.string.app_name));
+            pDialog.setContentText(getResources().getString(R.string.error_user));
+            pDialog.setConfirmText(getResources().getString(R.string.ok));
+            pDialog.setConfirmClickListener(new SweetAlertDialog.OnSweetClickListener() {
                 @Override
-                public void onClick(View view) {
+                public void onClick(SweetAlertDialog sDialog) {
+                    sDialog.dismissWithAnimation();
 
                     signOut();
                     finish();
-                    message.dismiss();
                 }
             });
-            message.show();
+            pDialog.show();
+
 
         }
 
